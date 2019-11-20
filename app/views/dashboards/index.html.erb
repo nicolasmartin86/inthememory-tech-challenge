@@ -1,5 +1,11 @@
 <div class="container">
     <div class="select-container"></div>
-    <div class="cards-container"></div>
+    <div class="cards-container">
+        <ul>
+            <% @countries.each do |c| %>
+                <li><%= c %></li>
+            <% end %>
+        </ul>
+    </div>
     <div class="graph-container"></div>
 </div>
