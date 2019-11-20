@@ -53,3 +53,5 @@ class DashboardsController < ApplicationController
         SalesDetail.select(request).group(:country, :'date_year_month').as_json(:except => :id)
     end
 end
+
+
