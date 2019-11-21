@@ -3,13 +3,29 @@
     align-items: center;
     justify-content: space-between;
     width: 100%;
+    margin: 16px 0;
 }
 
 .card-container {
-    // display: flex;
-    // flex-direction: column;
-    border: 3px solid $dark-gray;
-    border-radius: 4px;
+    background-color: white;
+    border: 1px solid $dark-gray;
+    border-radius: 16px;
+    padding: 16px;
     width: 20vw;
-    height: 10vh;
+    height: 15vh;
+    .card-title {
+        font-weight: bold;
+    }
+    .card-info {
+        width: 50%;
+        text-align: center;
+        margin: 0 auto;
+    }
+}
+
+.select-container {
+    display: flex;
+    justify-content: space-around;
+    padding: 16px;
+    width: 50%;
 }

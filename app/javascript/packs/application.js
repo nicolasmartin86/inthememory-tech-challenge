@@ -51,9 +51,11 @@ function drawChart() {
     });
     const data = google.visualization.arrayToDataTable(allValues);
     const options = {'title':'Revenue per month',
-                        'width':1200,
-                        'height':500,
-                        legend: { position: "none" }};
+                        'width': '100%',
+                        'height': 400,
+                        legend: { position: "none" },
+                        vAxis: {format: '#,###€'}
+                    };
 
     const chart = new google.visualization.ColumnChart(document.querySelector(".graph"));
 

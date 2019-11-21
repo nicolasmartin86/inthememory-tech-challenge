@@ -8,8 +8,8 @@
         </select>
     </div>
     <div class="cards-container">
-        <%= render "card", info: @revenues, title: "Revenue" %>
-        <%= render "card", info: @average_revenue_per_order, title: "Average revenue per order" %>
+        <%= render "card", info: number_to_currency(@revenues, :unit => "€"), title: "Revenue" %>
+        <%= render "card", info: number_to_currency(@average_revenue_per_order, :unit => "€"), title: "Average revenue per order" %>
         <%= render "card", info: @customer_count, title: "Number of distinct customers" %>
     </div>
     <div class="graph-container">
