@@ -39,6 +39,7 @@ class DashboardsController < ApplicationController
         end
     end
 
+    
     def average_revenue_per_order(country)
         total_revenue = revenues(country)
         orders = order_count(country)
