@@ -32,29 +32,20 @@ class DashboardsController < ApplicationController
             sales_details.country,
             SUM(sales_details.quantity * sales_details.unit_price) as total_revenue
         "
+        selected_country = SalesDetail.select(request).group(:country).as_json(:except => :id).detect do |c|
+            c["country"] == country
+        end
         if country == "All"
             return SalesDetail.sum("quantity * unit_price")
         else 
-            return SalesDetail.select(request).group(:country).as_json(:except => :id)
+            return selected_country["total_revenue"]
         end
     end
 
     def average_revenue_per_order(country)
         total_revenue = revenues(country)
         orders = order_count(country)
-        if country == "All"
-            return total_revenue.fdiv(orders)
-        else 
-            array = []
-            total_revenue.each do |r|
-                average = {}
-                num_order = orders[r['country']]
-                average[:country] = r['country']
-                average[:average_rpo] = r['total_revenue'].fdiv(num_order)
-                array << average
-            end
-            return array
-        end
+        return total_revenue.fdiv(orders)
     end
 
     def order_count(country)
@@ -63,7 +54,7 @@ class DashboardsController < ApplicationController
         if country == "All"
             return all_orders
         else 
-            return orders
+            return orders[country]
         end
     end
 
@@ -78,9 +69,9 @@ class DashboardsController < ApplicationController
         SUM(sales_details.quantity * sales_details.unit_price) as monthly_revenue
         "
         if country == "All"
-            return SalesDetail.select(global_request).group(:'date_year_month').as_json(:except => :id)
+            return SalesDetail.select(global_request).group(:'date_year_month').to_json(:except => :id)
         else 
-            return SalesDetail.select(request).group(:country, :'date_year_month').as_json(:except => :id)
+            return SalesDetail.select(request).where(country: country).group(:country, :'date_year_month').to_json(:except => :id)
         end
     end
 end

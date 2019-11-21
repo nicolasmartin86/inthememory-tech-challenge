@@ -1,7 +1,7 @@
 <div class="container">
     <div class="select-container">
         <div class="select-label">Please pick a country</div>
-        <select name="country-selection" id="select">
+        <select name="country-selection" id="select" onchange="document.location.href = '/dashboards?country=' + this.value">
             <% @countries.each do |country| %>
                 <option value="<%= country %>"><%= country %></option>
             <% end %>
@@ -12,5 +12,7 @@
         <%= render "card", info: @average_revenue_per_order, title: "Average revenue per order" %>
         <%= render "card", info: @customer_count, title: "Number of distinct customers" %>
     </div>
-    <div class="graph-container"></div>
+    <div class="graph-container">
+        <div class="graph" data-infos="<%= @revenue_per_month %>"></div>
+    </div>
 </div>
