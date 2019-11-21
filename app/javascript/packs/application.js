@@ -6,7 +6,11 @@ const options = document.querySelectorAll("option");
 if (options) {
     const arrayOfOptions = Array.from(options);
     const theOption = arrayOfOptions.filter((option) => {
-        return option.value === findGetParameter("country");
+        if (findGetParameter("country")) {
+            return option.value === findGetParameter("country");
+        } else {
+            return option.value === "All";
+        }
     })
     theOption[0].selected = true;
 }
@@ -41,14 +45,15 @@ function drawChart() {
         const valueToIntegrate = [
             d.date_year_month,
             d.monthly_revenue,
-            'color: blue'
+            'color: rgb(3, 152, 145)'
         ];
         allValues.push(valueToIntegrate);
     });
     const data = google.visualization.arrayToDataTable(allValues);
     const options = {'title':'Revenue per month',
                         'width':1200,
-                        'height':500};
+                        'height':500,
+                        legend: { position: "none" }};
 
     const chart = new google.visualization.ColumnChart(document.querySelector(".graph"));
 

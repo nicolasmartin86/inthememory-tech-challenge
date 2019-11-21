@@ -62,16 +62,18 @@ class DashboardsController < ApplicationController
     def revenue_per_month(country)
         request = "
         sales_details.country, 
-        CONCAT(date_part('year', sales_details.sale_date), '-', date_part('month', sales_details.sale_date)) as date_year_month, 
+        CONCAT(date_part('year', sales_details.sale_date), '-', 
+        CASE WHEN date_part('month', sales_details.sale_date) <= 9 THEN CONCAT('0', date_part('month', sales_details.sale_date)) ELSE CONCAT('',date_part('month', sales_details.sale_date)) END) as date_year_month, 
         SUM(sales_details.quantity * sales_details.unit_price) as monthly_revenue"
         global_request = "
-        CONCAT(date_part('year', sales_details.sale_date), '-', date_part('month', sales_details.sale_date)) as date_year_month, 
+        CONCAT(date_part('year', sales_details.sale_date), '-', 
+        CASE WHEN date_part('month', sales_details.sale_date) <= 9 THEN CONCAT('0', date_part('month', sales_details.sale_date)) ELSE CONCAT('',date_part('month', sales_details.sale_date)) END) as date_year_month, 
         SUM(sales_details.quantity * sales_details.unit_price) as monthly_revenue
         "
         if country == "All"
-            return SalesDetail.select(global_request).group(:'date_year_month').to_json(:except => :id)
+            return SalesDetail.select(global_request).group(:'date_year_month').order('date_year_month ASC').to_json(:except => :id)
         else 
-            return SalesDetail.select(request).where(country: country).group(:country, :'date_year_month').to_json(:except => :id)
+            return SalesDetail.select(request).where(country: country).group(:country, :'date_year_month').order('date_year_month ASC').to_json(:except => :id)
         end
     end
 end
