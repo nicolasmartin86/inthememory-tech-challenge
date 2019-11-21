@@ -1,11 +1,16 @@
 <div class="container">
-    <div class="select-container"></div>
-    <div class="cards-container">
-        <ul>
-            <% @countries.each do |c| %>
-                <li><%= c %></li>
+    <div class="select-container">
+        <div class="select-label">Please pick a country</div>
+        <select name="country-selection" id="select">
+            <% @countries.each do |country| %>
+                <option value="<%= country %>"><%= country %></option>
             <% end %>
-        </ul>
+        </select>
+    </div>
+    <div class="cards-container">
+        <%= render "card", info: @revenues, title: "Revenue" %>
+        <%= render "card", info: @average_revenue_per_order, title: "Average revenue per order" %>
+        <%= render "card", info: @customer_count, title: "Number of distinct customers" %>
     </div>
     <div class="graph-container"></div>
 </div>
